@@ -40,18 +40,62 @@ rooms = {
         'item': 'key'
     },
 
+    'Hall Two': {
+        'west': 'Stair Case'
+    },
+
+
+    'Hall Three': {
+        'north': 'Kitchen'
+    },
+
+
+
     'Kitchen': {
         'north': 'Hall',
+        'south': 'Hall Three',
         'item': 'monster',
     },
     'Dining Room': {
         'west': 'Hall',
         'south': 'Garden',
+        'east': 'Living Room',
         'item': 'potion'
     },
     'Garden': {
         'north': 'Dining Room'
+        
+    },
+
+    
+    'Living Room': {
+        'west': 'Dining Room',
+        'south': 'Rest Room1',
+        'north': 'Stair Case'
+    },
+
+    'Stair Case': {
+        'west': 'Patio',
+        'south': 'Living Room',
+        'east': 'Hall Two',
+    },
+
+
+    'Patio': {
+        'east': 'Stair Case'
+    },
+
+    'Hall Two': {
+        'west': 'Stair Case'
+    },
+
+    'Rest Room1': {
+        'north': 'Living Room'
     }
+
+
+
+
 }
 
 # start the player in the Hall
