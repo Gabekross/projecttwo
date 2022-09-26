@@ -34,9 +34,15 @@ inventory = []
 ## A dictionary linking a room to other rooms
 rooms = {
 
+    'Front Door': {
+        'east': 'Hall',
+        'home': 'Patio'
+    },
+
     'Hall': {
         'south': 'Kitchen',
         'east': 'Dining Room',
+        'west': 'Front Door',
         'item': 'key'
     },
 
@@ -48,8 +54,6 @@ rooms = {
     'Hall Three': {
         'north': 'Kitchen'
     },
-
-
 
     'Kitchen': {
         'north': 'Hall',
@@ -67,7 +71,6 @@ rooms = {
         
     },
 
-    
     'Living Room': {
         'west': 'Dining Room',
         'south': 'Rest Room1',
@@ -82,7 +85,9 @@ rooms = {
 
 
     'Patio': {
-        'east': 'Stair Case'
+        'east': 'Stair Case',
+        'item': 'portalone',
+        'home': 'Front Door'
     },
 
     'Hall Two': {
@@ -92,9 +97,6 @@ rooms = {
     'Rest Room1': {
         'north': 'Living Room'
     }
-
-
-
 
 }
 
@@ -154,3 +156,10 @@ while True:
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
         print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
         break
+
+    if currentRoom == 'Patio' and 'portalone' in inventory and 'potion' in inventory:
+        # currentRoom = rooms[currentRoom][move[1]]
+
+        print('You escaped the house with the ultra rare key and magic potion.............. YOU WIN!')
+        break
+
