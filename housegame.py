@@ -74,8 +74,39 @@ rooms = {
     'Living Room': {
         'west': 'Dining Room',
         'south': 'Rest Room1',
-        'north': 'Stair Case'
+        'north': 'Stair Case',
+        'east': 'Game Room'
     },
+
+    'Game Room': {
+        'west': 'Living Room',
+        'south': 'Theatre'
+    },
+
+    'Theatre': {
+        'north': 'Game Room'
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     'Stair Case': {
         'west': 'Patio',
