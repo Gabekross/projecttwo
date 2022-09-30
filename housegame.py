@@ -14,7 +14,7 @@ def showInstructions():
     """Show the game instructions when called"""
     # print a main menu and the commands, items and bonus
     print('''
-    RPG Game
+    Magic House Navigator
     ========
     Commands:
       go [direction: (north, south, east or west)]
