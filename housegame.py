@@ -24,7 +24,9 @@ def showInstructions():
       [riddles, teleport to frontdoor, monster]
     ''')
 
+
 def showDescription():
+    """Show how to play the game when called"""
 
     # print game description
     print(crayons.yellow('''
@@ -32,7 +34,7 @@ def showDescription():
     Level 1: Find your way through this large hosuse by navigating through a series of rooms. Pick up choice items along the way until you get to dreamland.
     Level 2: Once in dreamland, grab the treasure and answer a dremaland  quiz to exit dreamland.
     Continue to navigate the migty house and find your way to the garden. in the garden, an important item is up for grabs.
-    Level 3: Find your way to the front door. if you have three important items in yur possession, you stand a chance to win a grand prize by solving the dreamhosue riddle.
+    Level 3: Find your way to the front door. (Or Teleport to the front door with the home key word)if you have three important items in your possession, you stand a chance to win a grand prize by solving the dreamhosue riddle.
     =========
     '''))
     print(crayons.green('Hint! The key, potion and treasure are valuable'))
@@ -60,7 +62,7 @@ def showStatus():
     # an inventory, which is initially empty
 inventory = []
 
-    # A dictionary linking a room to other rooms
+# A dictionary linking a room to other rooms
 rooms = {
 
     'Front Door': {
@@ -77,7 +79,7 @@ rooms = {
 
     'Hall Two': {
         'west': 'Stair Case',
-        'north': 'Master Bedroom'
+        'north': 'Dream Land'
     },
 
 
@@ -135,10 +137,6 @@ rooms = {
         'home': 'Front Door'
     },
 
-    'Hall Two': {
-        'west': 'Stair Case'
-    },
-
     'Rest Room1': {
         'north': 'Living Room'
     },
@@ -191,7 +189,7 @@ rooms = {
     'Secret Passage': {
         'north': 'Theatre',
         'east': 'Forbidden',
-        'item':'hammer'
+        'item': 'hammer'
     },
 
     'Temple': {
@@ -207,110 +205,102 @@ currentRoom = 'Hall'
 
 # Calling this function to describe gameplay to user
 showDescription()
- # Call this function to display instructions to player
+# Call this function to display instructions to player
 showInstructions()
 
 decisionInitial = 1
 
-   # breaking this while loop means the game is over
+# breaking this while loop means the game is over
 while (decisionInitial == 1):
 
-        showStatus()
+    showStatus()
 
-        # the player MUST type something in
-        # otherwise input will keep asking
-        move = ''
-        while move == '':
-            move = input('>')
+    # the player MUST type something in
+    # otherwise input will keep asking
+    move = ''
+    while move == '':
+        move = input('>')
 
-        # normalizing input:
-        # .lower() makes it lower case, .split() turns it to a list
-        # therefore, "get golden key" becomes ["get", "golden key"]
-        move = move.lower().split(" ", 1)
+    # normalizing input:
+    # .lower() makes it lower case, .split() turns it to a list
+    # therefore, "get golden key" becomes ["get", "golden key"]
+    move = move.lower().split(" ", 1)
 
-        # if they type 'go' first
-        if move[0] == 'go':
-            # check that they are allowed wherever they want to go
-            if move[1] in rooms[currentRoom]:
-                # set the current room to the new room
-                currentRoom = rooms[currentRoom][move[1]]
-            # if they aren't allowed to go that way:
-            else:
-                print(crayons.red('You can\'t go that way!'))
+    # if they type 'go' first
+    if move[0] == 'go':
+        # check that they are allowed wherever they want to go
+        if move[1] in rooms[currentRoom]:
+            # set the current room to the new room
+            currentRoom = rooms[currentRoom][move[1]]
+        # if they aren't allowed to go that way:
+        else:
+            print(crayons.red('You can\'t go that way!'))
 
-        # if they type 'get' first
-        if move[0] == 'get':
-            # make two checks:
-            # 1. if the current room contains an item
-            # 2. if the item in the room matches the item the player wishes to get
-            if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-                # add the item to their inventory
-                inventory.append(move[1])
-                # display a helpful message
-                print(move[1] + ' got!')
-                # delete the item key:value pair from the room's dictionary
-                del rooms[currentRoom]['item']
-            # if there's no item in the room or the item doesn't match
-            else:
-                # tell them they can't get it
-                print('Can\'t get ' + move[1] + '!')
+    # if they type 'get' first
+    if move[0] == 'get':
+        # make two checks:
+        # 1. if the current room contains an item
+        # 2. if the item in the room matches the item the player wishes to get
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+            # add the item to their inventory
+            inventory.append(move[1])
+            # display a helpful message
+            print(move[1] + ' got!')
+            # delete the item key:value pair from the room's dictionary
+            del rooms[currentRoom]['item']
+        # if there's no item in the room or the item doesn't match
+        else:
+            # tell them they can't get it
+            print('Can\'t get ' + move[1] + '!')
 
-            # If a player enters a room with a monster
+        # If a player enters a room with a monster
 
-        if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-            print('A monster has got you... GAME OVER!')
+    if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
+        print('A monster has got you... GAME OVER!')
+        break
+
+    # Player must answer a riddle to get out of this room and teleport to Front Door
+
+    if currentRoom == 'Forbidden':
+        print(f"{crayons.red('Danger!!! you have reached the forbidden room.')}")
+        print(f"{crayons.yellow('Answer this riddle! to save your life')}")
+
+        resp = requests.get(f"{API}")
+        print(resp.json().get("riddle"))
+        riddle_answer = resp.json().get("answer")
+        user_answer = input()
+
+    # if user answer is not correct, user looses the game
+        if (user_answer != riddle_answer):
+            print(crayons.red("You have met your end! "))
             break
 
-          
-        
-        # Player must answer a riddle to get out of this room and teleport to Front Door
+    # if a player answers the riddle correctly , user gets teleported to front door
+        else:
+            print("You are safe! Proceed to front door")
+            currentRoom = 'Front Door'
 
-        if currentRoom == 'Forbidden':
-            print(f"{crayons.red('Danger!!! you have reached the forbidden room.')}")
-            print(f"{crayons.yellow('Answer this riddle! to save your life')}")
+    if currentRoom == 'Dream Land':
+        print(f"{crayons.red('You are trapped in dreamland. You have one chance to wakeup or stay asleep forever.')}")
+        print(f"{crayons.yellow('Solve this riddle! to leave dreamland')}")
 
-            resp = requests.get(f"{API}")
-            print(resp.json().get("riddle"))
-            riddle_answer = resp.json().get("answer")
-            user_answer = input()
+        resp = requests.get(f"{API}")
+        print(resp.json().get("riddle"))
+        riddle_answer = resp.json().get("answer")
+        user_answer = input()
 
-        # if user answer is not correct, user looses the game
-            if (user_answer != riddle_answer):
-                print(crayons.red("You have met your end! "))
-                break
-
-        # if a player answers the riddle correctly , user gets teleported to front door
-            else:
-                print("You are safe! Proceed to front door")
-                currentRoom = 'Front Door'
-
-
-        if currentRoom == 'Dreamland':
-            print(
-                'You are trapped in dreamland. You have one chanve to wakeup or stay asleep forever.')
-            print(f"{crayons.red('Danger!!! you have reached the forbidden room.')}")
-            print(f"{crayons.yellow('Solve this riddle! to leave dreamland')}")
-
-            resp = requests.get(f"{API}")
-            print(resp.json().get("riddle"))
-            riddle_answer = resp.json().get("answer")
-            user_answer = input()
-
-        # if user answer is not correct, user looses the game
-            if (user_answer != riddle_answer):
-                print(crayons.red("Stay asleep forever! "))
-                break
-
-        # if a player answers the riddle correctly , user gets teleported to front door
-            else:
-                print("Good Job! Proceed to the temple and grab the treasure")
-                currentRoom = 'Temple'
-
-        # Define how a player can win
-        if currentRoom == 'Temple' and 'portalone' in inventory and 'key' in inventory and 'treasure' in inventory:
-
-            print('You have found the treasure and escaped the house!!.....YOU WIN')
+    # if user answer is not correct, user looses the game
+        if (user_answer != riddle_answer):
+            print(crayons.red("Stay asleep forever! "))
             break
 
+    # if a player answers the riddle correctly , user gets teleported to front door
+        else:
+            print("Good Job! Proceed to the temple and grab the treasure")
+            currentRoom = 'Temple'
 
+    # Define how a player can win
+    if currentRoom == 'Temple' and 'portalone' in inventory and 'key' in inventory and 'treasure' in inventory:
 
+        print('You have found the treasure and escaped the house!!.....YOU WIN')
+        break
