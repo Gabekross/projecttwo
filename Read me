@@ -1,0 +1,35 @@
+    ===================================================
+    Aim: Win the game and earn a trip to Magic Land
+    ====================================================
+    
+    Attain levels
+    ==============
+    Level 1: Find your way through this large hosuse by navigating through a series of rooms. Pick up choice items along the way until you get to dreamland.
+    Level 2: Once in dreamland,  answer a dremaland  quiz to exit dreamland and teleport to the temple.
+    Level 3: Continue to navigate the migty house and find your way to the garden. in the garden, an important item is up for grabs.
+    Level 3: Find your way to the forbidden room through the secret passage. An important item awaits,if you can solve the riddle. 
+    level 4: Go to the patio, with the right items, you Win! and earn a Navigator Badge.
+    ====================================================================================================================
+    
+    Magic House Navigator
+    ==========
+    Commands:
+    =========
+      go [direction: (north, south, east or west)]
+      get [item]
+      
+      example: go north
+      example: get magic ring
+    ======== 
+    items:
+    =========
+      [key, potion, treasure, portaone, magic ring]
+    bonus and evil:
+      [riddles, teleport with (home), monster]
+    ==========
+    Hints!!!
+    ==========
+    The key, magic ring, portalone, and treasure are valuable
+    Sometimes, It is okay to not know the answer'))
+    go ghostmode to leave temple'
+    Avoid the monster.
