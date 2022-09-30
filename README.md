@@ -1,9 +1,9 @@
 Run on Visual Studio Code for best Experiecnce.
-Game mode: Command Line
+Game played in Terminal
 
-To play: Enter in TERMINAL; pythone3 housegame.py
+To play; python3 housegame.py
 --------------------------
-Game play:
+Game play
 ---------------------------
 Find your way through a large hosuse by navigating through a series of rooms. Pick up choice items along the way until you get to dreamland.
 Once in dreamland,  answer a dremaland  quiz to exit dreamland and teleport to a temple.
