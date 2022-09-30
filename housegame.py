@@ -199,7 +199,7 @@ rooms = {
     }
 
 }
-
+#test
 # start the player in the Hall
 currentRoom = 'Hall'
 
